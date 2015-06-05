@@ -1,0 +1,59 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+import java.lang.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        Scanner sc=new Scanner(System.in);
+        int num=sc.nextInt();
+        StringBuilder inputs[]=new StringBuilder[num];
+        for(int i=0;i<num;i++)
+        {
+             inputs[i]=new StringBuilder(sc.next()); 
+        }
+        for(int i=0;i<num;i++)
+        {
+           boolean isPossible=false;
+           for(int j=inputs[i].length()-2;j>=0;j--)
+           {
+                  if((int)inputs[i].charAt(j)<(int)inputs[i].charAt(j+1))
+                  {
+                      int k=j;
+                      int flag=0;
+                      int min=0;
+                      int minindex=0;
+                      for(int l=inputs[i].length()-1;l>k;l--)
+                      {
+                             if(((int)inputs[i].charAt(k)<(int)inputs[i].charAt(l))&&((flag==0)||(int)inputs[i].charAt(l)<min))
+                             {
+                                   min= (int)inputs[i].charAt(l);
+                                   minindex=l;
+                                   flag=1;
+                             }
+                      }
+                      char temp=inputs[i].charAt(k);
+                      inputs[i].setCharAt(k,inputs[i].charAt(minindex));
+                      inputs[i].setCharAt(minindex,temp);
+                      j=0;
+                      for(int l=k+1;l+j<inputs[i].length()-1-j;j++)
+                      {
+                            temp=inputs[i].charAt(l+j);
+                            inputs[i].setCharAt((l+j),inputs[i].charAt(inputs[i].length()-1-j));
+                            inputs[i].setCharAt((inputs[i].length()-1-j),temp);
+                      }
+                      System.out.println(inputs[i]);
+                      isPossible=true;
+                      break;
+                  }
+               
+           }
+            if(isPossible==false)
+                   System.out.println("no answer");
+        }
+    }
+}
